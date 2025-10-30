@@ -8,7 +8,8 @@
       "Bash(npm --version)",
       "Bash(git add:*)",
       "Bash(direnv reload:*)",
-      "Bash(direnv exec:*)"
+      "Bash(direnv exec:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []
