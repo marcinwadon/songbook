@@ -279,7 +279,7 @@ export default function SongPage() {
             {currentKey && (
               <p className="text-xl text-muted-foreground mb-6 text-center">Tonacja: {currentKey}</p>
             )}
-            <div className="leading-loose">
+            <div>
               <ChordProRenderer
                 content={currentVerseContent}
                 transpose={transpose}

@@ -124,7 +124,7 @@
 /* ChordPro Styles */
 .chord-pro-output {
   font-family: 'Courier New', 'Consolas', monospace;
-  line-height: 1.8;
+  line-height: 1.6;
 }
 
 /* Table-based chord formatting - chords above lyrics */
@@ -215,7 +215,7 @@
 
 .fullscreen .chord-pro-output {
   font-size: 1.5em;
-  line-height: 2;
+  line-height: 1.4;
   max-width: 90%;
 }
 
