@@ -124,61 +124,126 @@
 /* ChordPro Styles */
 .chord-pro-output {
   font-family: 'Courier New', 'Consolas', monospace;
-  line-height: 1.6;
+  line-height: 1.8;
 }
 
-/* Table-based chord formatting */
-.chord-pro-output table {
+/* Table-based chord formatting - chords above lyrics */
+.chord-pro-output.chords-above table {
   border-collapse: collapse;
   margin-bottom: 0.5em;
 }
 
-.chord-pro-output td {
+.chord-pro-output.chords-above td {
   padding: 0;
   vertical-align: bottom;
   white-space: pre;
 }
 
 /* Chord row styling */
-.chord-pro-output tr:first-child td {
+.chord-pro-output.chords-above tr:first-child td {
   color: var(--primary);
-  font-weight: bold;
-  font-size: 0.9em;
+  font-weight: 700;
+  font-size: 1em;
   padding-bottom: 2px;
-  height: 1.2em;
+  height: 1.4em;
 }
 
 /* Lyrics row styling */
-.chord-pro-output tr:last-child td {
+.chord-pro-output.chords-above tr:last-child td {
   color: var(--foreground);
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+/* Chords on the right side */
+.chord-pro-output.chords-right .line {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.8em;
+  gap: 2em;
+}
+
+.chord-pro-output.chords-right .lyrics {
+  flex: 1;
+  color: var(--foreground);
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.chord-pro-output.chords-right .chords {
+  color: var(--primary);
+  font-weight: 700;
   font-size: 1em;
+  white-space: nowrap;
+  min-width: 120px;
+  text-align: right;
+}
+
+/* No chords mode - only lyrics */
+.chord-pro-output.chords-hidden .line {
+  margin-bottom: 0.8em;
+}
+
+.chord-pro-output.chords-hidden .lyrics {
+  color: var(--foreground);
+  font-size: 1.1em;
+  font-weight: 600;
 }
 
 /* Comments and metadata */
 .chord-pro-output .comment {
   font-style: italic;
   color: var(--muted-foreground);
-  margin: 0.5em 0;
+  margin: 0.8em 0;
   display: block;
+  font-weight: 500;
 }
 
 .chord-pro-output .paragraph {
   margin-bottom: 1.5em;
 }
 
-/* Fullscreen Styles */
+/* Fullscreen Styles - 16:9 optimized */
+.fullscreen-view {
+  aspect-ratio: 16 / 9;
+  max-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .fullscreen .chord-pro-output {
-  font-size: 1.8em;
-  line-height: 2;
+  font-size: 2.2em;
+  line-height: 2.2;
+  max-width: 90%;
 }
 
-.fullscreen .chord-pro-output tr:first-child td {
-  font-size: 1.1em;
-  padding-bottom: 4px;
-}
-
-.fullscreen .chord-pro-output tr:last-child td {
+.fullscreen .chord-pro-output.chords-above tr:first-child td {
   font-size: 1em;
+  padding-bottom: 6px;
+  font-weight: 700;
+}
+
+.fullscreen .chord-pro-output.chords-above tr:last-child td {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.fullscreen .chord-pro-output.chords-right .lyrics {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.fullscreen .chord-pro-output.chords-right .chords {
+  font-size: 1em;
+  font-weight: 700;
+  min-width: 160px;
+}
+
+.fullscreen .chord-pro-output.chords-hidden .lyrics {
+  font-size: 1.2em;
+  font-weight: 600;
 }
 
 /* Remove any default table borders */

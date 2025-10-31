@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
-import { ChordProRenderer } from '@/components/songs/chord-pro-renderer'
+import { ChordProRenderer, ChordDisplay } from '@/components/songs/chord-pro-renderer'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { ArrowLeft, Edit, Trash2, Maximize2, Key } from 'lucide-react'
+import { ArrowLeft, Edit, Trash2, Maximize2, Key, Music } from 'lucide-react'
 import { toast } from 'sonner'
 import { KEYS } from '@/lib/chords/transposer'
 
@@ -30,6 +30,7 @@ export default function SongPage() {
   const [loading, setLoading] = useState(true)
   const [transpose, setTranspose] = useState(0)
   const [currentKey, setCurrentKey] = useState<string>('')
+  const [chordDisplay, setChordDisplay] = useState<ChordDisplay>('above')
   const [isFullscreen, setIsFullscreen] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)
   const [isOwner, setIsOwner] = useState(false)
@@ -148,14 +149,20 @@ export default function SongPage() {
 
   if (isFullscreen) {
     return (
-      <div className="min-h-screen bg-background p-8" onClick={toggleFullscreen}>
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-4xl font-bold mb-4">{song.title}</h1>
-          {currentKey && (
-            <p className="text-xl text-muted-foreground mb-8">Key: {currentKey}</p>
-          )}
-          <div className="text-2xl leading-loose">
-            <ChordProRenderer content={song.content} transpose={transpose} />
+      <div className="fullscreen min-h-screen bg-background flex items-center justify-center p-8" onClick={toggleFullscreen}>
+        <div className="fullscreen-view w-full">
+          <div className="max-w-6xl mx-auto">
+            <h1 className="text-5xl font-bold mb-6 text-center">{song.title}</h1>
+            {currentKey && (
+              <p className="text-2xl text-muted-foreground mb-12 text-center">Tonacja: {currentKey}</p>
+            )}
+            <div className="text-3xl leading-loose">
+              <ChordProRenderer
+                content={song.content}
+                transpose={transpose}
+                chordDisplay={chordDisplay}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -224,41 +231,61 @@ export default function SongPage() {
               </div>
             </CardHeader>
             <CardContent>
-              {/* Transpose Controls */}
-              <div className="mb-6 flex items-center gap-4">
-                <label className="text-sm font-medium">Transpose:</label>
-                <Select value={transpose.toString()} onValueChange={handleTranspose}>
-                  <SelectTrigger className="w-32">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="0">Original</SelectItem>
-                    <SelectItem value="-6">-6 (♭6)</SelectItem>
-                    <SelectItem value="-5">-5 (♭5)</SelectItem>
-                    <SelectItem value="-4">-4 (♭4)</SelectItem>
-                    <SelectItem value="-3">-3 (♭3)</SelectItem>
-                    <SelectItem value="-2">-2 (♭2)</SelectItem>
-                    <SelectItem value="-1">-1 (♭1)</SelectItem>
-                    <SelectItem value="1">+1 (♯1)</SelectItem>
-                    <SelectItem value="2">+2 (♯2)</SelectItem>
-                    <SelectItem value="3">+3 (♯3)</SelectItem>
-                    <SelectItem value="4">+4 (♯4)</SelectItem>
-                    <SelectItem value="5">+5 (♯5)</SelectItem>
-                    <SelectItem value="6">+6 (♯6)</SelectItem>
-                  </SelectContent>
-                </Select>
-                {transpose !== 0 && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => {
-                      setTranspose(0)
-                      setCurrentKey(song.key || 'C')
-                    }}
-                  >
-                    Reset
-                  </Button>
-                )}
+              {/* Controls */}
+              <div className="mb-6 flex flex-wrap items-center gap-4">
+                {/* Transpose Controls */}
+                <div className="flex items-center gap-2">
+                  <Key className="h-4 w-4 text-muted-foreground" />
+                  <label className="text-sm font-medium">Transpozycja:</label>
+                  <Select value={transpose.toString()} onValueChange={handleTranspose}>
+                    <SelectTrigger className="w-32">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="0">Oryginalna</SelectItem>
+                      <SelectItem value="-6">-6 (♭6)</SelectItem>
+                      <SelectItem value="-5">-5 (♭5)</SelectItem>
+                      <SelectItem value="-4">-4 (♭4)</SelectItem>
+                      <SelectItem value="-3">-3 (♭3)</SelectItem>
+                      <SelectItem value="-2">-2 (♭2)</SelectItem>
+                      <SelectItem value="-1">-1 (♭1)</SelectItem>
+                      <SelectItem value="1">+1 (♯1)</SelectItem>
+                      <SelectItem value="2">+2 (♯2)</SelectItem>
+                      <SelectItem value="3">+3 (♯3)</SelectItem>
+                      <SelectItem value="4">+4 (♯4)</SelectItem>
+                      <SelectItem value="5">+5 (♯5)</SelectItem>
+                      <SelectItem value="6">+6 (♯6)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                  {transpose !== 0 && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => {
+                        setTranspose(0)
+                        setCurrentKey(song.key || 'C')
+                      }}
+                    >
+                      Reset
+                    </Button>
+                  )}
+                </div>
+
+                {/* Chord Display Controls */}
+                <div className="flex items-center gap-2">
+                  <Music className="h-4 w-4 text-muted-foreground" />
+                  <label className="text-sm font-medium">Wyświetlanie akordów:</label>
+                  <Select value={chordDisplay} onValueChange={(value) => setChordDisplay(value as ChordDisplay)}>
+                    <SelectTrigger className="w-40">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="above">Nad tekstem</SelectItem>
+                      <SelectItem value="right">Po prawej</SelectItem>
+                      <SelectItem value="hidden">Ukryte</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
               {/* Song Content */}
@@ -266,6 +293,7 @@ export default function SongPage() {
                 <ChordProRenderer
                   content={song.content}
                   transpose={transpose}
+                  chordDisplay={chordDisplay}
                   className="text-lg"
                 />
               </div>
