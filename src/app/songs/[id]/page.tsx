@@ -32,6 +32,9 @@ export default function SongPage() {
   const [currentKey, setCurrentKey] = useState<string>('')
   const [chordDisplay, setChordDisplay] = useState<ChordDisplay>('above')
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [fontSize, setFontSize] = useState(100) // percentage
+  const [currentVerse, setCurrentVerse] = useState(0)
+  const [verses, setVerses] = useState<string[]>([])
   const [isAdmin, setIsAdmin] = useState(false)
   const [isOwner, setIsOwner] = useState(false)
   const supabase = createClient()
@@ -51,6 +54,44 @@ export default function SongPage() {
       document.removeEventListener('fullscreenchange', handleFullscreenChange)
     }
   }, [])
+
+  useEffect(() => {
+    if (song?.content) {
+      // Split content into verses by double newlines
+      const versesArray = song.content
+        .split(/\n\s*\n/)
+        .filter(verse => verse.trim().length > 0)
+      setVerses(versesArray)
+      setCurrentVerse(0)
+    }
+  }, [song?.content])
+
+  useEffect(() => {
+    if (!isFullscreen) return
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault()
+        setCurrentVerse(prev => Math.min(prev + 1, verses.length - 1))
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault()
+        setCurrentVerse(prev => Math.max(prev - 1, 0))
+      } else if (e.key === 'Escape') {
+        if (document.fullscreenElement) {
+          document.exitFullscreen()
+        }
+      } else if (e.key === '+' || e.key === '=') {
+        e.preventDefault()
+        setFontSize(prev => Math.min(prev + 10, 200))
+      } else if (e.key === '-') {
+        e.preventDefault()
+        setFontSize(prev => Math.max(prev - 10, 50))
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [isFullscreen, verses.length])
 
   async function fetchSong() {
     setLoading(true)
@@ -131,6 +172,46 @@ export default function SongPage() {
     }
   }
 
+  const nextVerse = () => {
+    if (currentVerse < verses.length - 1) {
+      setCurrentVerse(currentVerse + 1)
+    }
+  }
+
+  const previousVerse = () => {
+    if (currentVerse > 0) {
+      setCurrentVerse(currentVerse - 1)
+    }
+  }
+
+  const increaseFontSize = () => {
+    setFontSize(prev => Math.min(prev + 10, 200))
+  }
+
+  const decreaseFontSize = () => {
+    setFontSize(prev => Math.max(prev - 10, 50))
+  }
+
+  const handleFullscreenClick = (e: React.MouseEvent) => {
+    // Don't navigate if clicking on control buttons
+    if ((e.target as HTMLElement).closest('button')) {
+      return
+    }
+
+    // Click on left side = previous, right side = next
+    const clickX = e.clientX
+    const screenWidth = window.innerWidth
+
+    if (clickX < screenWidth / 3) {
+      previousVerse()
+    } else if (clickX > (screenWidth * 2) / 3) {
+      nextVerse()
+    } else {
+      // Center click - next verse (most common action)
+      nextVerse()
+    }
+  }
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -148,23 +229,73 @@ export default function SongPage() {
   }
 
   if (isFullscreen) {
+    const currentVerseContent = verses[currentVerse] || song.content
+
     return (
-      <div className="fullscreen min-h-screen bg-background flex items-center justify-center p-8" onClick={toggleFullscreen}>
+      <div
+        className="fullscreen min-h-screen bg-background flex items-center justify-center p-8 cursor-pointer"
+        onClick={handleFullscreenClick}
+      >
+        {/* Control buttons - top right */}
+        <div className="absolute top-4 right-4 flex gap-2 z-50">
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={decreaseFontSize}
+            className="text-lg font-bold"
+          >
+            A-
+          </Button>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={increaseFontSize}
+            className="text-lg font-bold"
+          >
+            A+
+          </Button>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={(e) => {
+              e.stopPropagation()
+              toggleFullscreen()
+            }}
+          >
+            Wyjdź
+          </Button>
+        </div>
+
+        {/* Verse indicator - top left */}
+        {verses.length > 1 && (
+          <div className="absolute top-4 left-4 text-2xl text-muted-foreground z-50">
+            {currentVerse + 1} / {verses.length}
+          </div>
+        )}
+
         <div className="fullscreen-view w-full">
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-6xl mx-auto" style={{ fontSize: `${fontSize}%` }}>
             <h1 className="text-5xl font-bold mb-6 text-center">{song.title}</h1>
             {currentKey && (
               <p className="text-2xl text-muted-foreground mb-12 text-center">Tonacja: {currentKey}</p>
             )}
             <div className="text-3xl leading-loose">
               <ChordProRenderer
-                content={song.content}
+                content={currentVerseContent}
                 transpose={transpose}
                 chordDisplay={chordDisplay}
               />
             </div>
           </div>
         </div>
+
+        {/* Navigation hints - bottom */}
+        {verses.length > 1 && (
+          <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-muted-foreground text-sm flex gap-4">
+            {currentVerse > 0 && <span>← Poprzednia</span>}
+            {currentVerse < verses.length - 1 && <span>Następna →</span>}
+          </div>
+        )}
       </div>
     )
   }
