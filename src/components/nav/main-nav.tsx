@@ -36,13 +36,13 @@ export function MainNav({ user, isAdmin }: MainNavProps) {
           <div className="flex items-center space-x-6">
             <Link href="/" className="flex items-center space-x-2">
               <Music className="h-6 w-6" />
-              <span className="text-lg font-bold">Śpiewnik</span>
+              <span className="text-lg font-bold">Śpiewnik Kościelny</span>
             </Link>
 
             <div className="flex items-center space-x-4">
               <Link href="/songs" className="flex items-center space-x-1 text-sm hover:text-primary">
                 <Home className="h-4 w-4" />
-                <span>Piosenki</span>
+                <span>Pieśni</span>
               </Link>
 
               {user && (
@@ -55,7 +55,7 @@ export function MainNav({ user, isAdmin }: MainNavProps) {
                   {isAdmin && (
                     <Link href="/admin/songs/new" className="flex items-center space-x-1 text-sm hover:text-primary">
                       <Plus className="h-4 w-4" />
-                      <span>Nowa piosenka</span>
+                      <span>Nowa pieśń</span>
                     </Link>
                   )}
                 </>

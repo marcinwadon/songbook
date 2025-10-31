@@ -30,13 +30,13 @@ export default async function SetlistsPage() {
     <div>
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h1 className="text-3xl font-bold">My Setlists</h1>
-          <p className="text-muted-foreground mt-2">Organize your songs into performance setlists</p>
+          <h1 className="text-3xl font-bold">Moje Playlisty</h1>
+          <p className="text-muted-foreground mt-2">Organizuj swoje pieśni w playlisty na nabożeństwa</p>
         </div>
         <Button disabled className="flex items-center gap-2">
           <Plus className="h-4 w-4" />
-          New Setlist
-          <span className="text-xs ml-1">(Coming Soon)</span>
+          Nowa Playlista
+          <span className="text-xs ml-1">(Wkrótce)</span>
         </Button>
       </div>
 
@@ -50,15 +50,15 @@ export default async function SetlistsPage() {
                 </div>
                 <CardTitle className="mt-2">{setlist.name}</CardTitle>
                 <CardDescription>
-                  Created {new Date(setlist.created_at).toLocaleDateString()}
+                  Utworzono {new Date(setlist.created_at).toLocaleDateString('pl-PL')}
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Setlist management coming soon...
+                  Zarządzanie playlistami wkrótce...
                 </p>
                 <Button variant="outline" size="sm" disabled className="w-full">
-                  View Setlist
+                  Zobacz playlistę
                 </Button>
               </CardContent>
             </Card>
@@ -68,13 +68,13 @@ export default async function SetlistsPage() {
         <Card>
           <CardContent className="text-center py-12">
             <ListMusic className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h2 className="text-lg font-semibold mb-2">No setlists yet</h2>
+            <h2 className="text-lg font-semibold mb-2">Brak playlist</h2>
             <p className="text-muted-foreground mb-4">
-              Create your first setlist to organize songs for performances
+              Utwórz swoją pierwszą playlistę, aby organizować pieśni na nabożeństwa
             </p>
             <Button disabled>
-              Create Your First Setlist
-              <span className="text-xs ml-2">(Coming Soon)</span>
+              Utwórz pierwszą playlistę
+              <span className="text-xs ml-2">(Wkrótce)</span>
             </Button>
           </CardContent>
         </Card>

@@ -56,7 +56,7 @@ export default function RegisterPage() {
     <Card>
       <CardHeader>
         <CardTitle>Utwórz konto</CardTitle>
-        <CardDescription>Zarejestruj się, aby zarządzać swoimi piosenkami i playlistami</CardDescription>
+        <CardDescription>Zarejestruj się, aby zarządzać swoimi pieśniami i playlistami</CardDescription>
       </CardHeader>
       <form onSubmit={handleRegister}>
         <CardContent className="space-y-4">

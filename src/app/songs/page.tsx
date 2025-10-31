@@ -75,8 +75,8 @@ export default function SongsPage() {
       <div className="flex flex-col gap-4 mb-6">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold">Piosenki</h1>
-            <p className="text-muted-foreground mt-2">Przeglądaj i zarządzaj swoją kolekcją piosenek</p>
+            <h1 className="text-3xl font-bold">Pieśni</h1>
+            <p className="text-muted-foreground mt-2">Przeglądaj i zarządzaj swoją kolekcją pieśni</p>
           </div>
         </div>
 
@@ -85,7 +85,7 @@ export default function SongsPage() {
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
           <Input
             type="text"
-            placeholder="Szukaj piosenek po tytule, tekście lub tonacji..."
+            placeholder="Szukaj pieśni po tytule, tekście lub tonacji..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="pl-10 pr-10"
@@ -102,14 +102,14 @@ export default function SongsPage() {
 
         {searchQuery && (
           <p className="text-sm text-muted-foreground">
-            Znaleziono {filteredSongs.length} {filteredSongs.length === 1 ? 'piosenkę' : filteredSongs.length < 5 ? 'piosenki' : 'piosenek'}
+            Znaleziono {filteredSongs.length} {filteredSongs.length === 1 ? 'pieśń' : 'pieśni'}
           </p>
         )}
       </div>
 
       {loading ? (
         <div className="text-center py-12">
-          <p className="text-muted-foreground">Ładowanie piosenek...</p>
+          <p className="text-muted-foreground">Ładowanie pieśni...</p>
         </div>
       ) : filteredSongs.length > 0 ? (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -146,7 +146,7 @@ export default function SongsPage() {
         <Card>
           <CardContent className="text-center py-12">
             <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h2 className="text-lg font-semibold mb-2">Nie znaleziono piosenek</h2>
+            <h2 className="text-lg font-semibold mb-2">Nie znaleziono pieśni</h2>
             <p className="text-muted-foreground">
               Spróbuj wyszukać używając innych słów kluczowych
             </p>
@@ -156,13 +156,13 @@ export default function SongsPage() {
         <Card>
           <CardContent className="text-center py-12">
             <Music2 className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-            <h2 className="text-lg font-semibold mb-2">Brak piosenek</h2>
+            <h2 className="text-lg font-semibold mb-2">Brak pieśni</h2>
             <p className="text-muted-foreground mb-4">
-              {user ? "Zacznij od dodania swojej pierwszej piosenki" : "Zaloguj się, aby dodać piosenki"}
+              {user ? "Zacznij od dodania swojej pierwszej pieśni" : "Zaloguj się, aby dodać pieśni"}
             </p>
             {user && (
               <Link href="/admin/songs/new">
-                <Button>Dodaj pierwszą piosenkę</Button>
+                <Button>Dodaj pierwszą pieśń</Button>
               </Link>
             )}
           </CardContent>

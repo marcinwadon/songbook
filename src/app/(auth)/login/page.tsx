@@ -44,8 +44,8 @@ export default function LoginPage() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Witaj w Śpiewniku</CardTitle>
-        <CardDescription>Zaloguj się, aby uzyskać dostęp do swoich piosenek i playlist</CardDescription>
+        <CardTitle>Witaj w Śpiewniku Kościelnym</CardTitle>
+        <CardDescription>Zaloguj się, aby uzyskać dostęp do swoich pieśni i playlist</CardDescription>
       </CardHeader>
       <form onSubmit={handleLogin}>
         <CardContent className="space-y-4">

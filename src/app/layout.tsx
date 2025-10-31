@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Śpiewnik - Aplikacja do zarządzania akordami",
-  description: "Zarządzaj swoimi piosenkami, akordami i playlistami z łatwością",
+  title: "Śpiewnik Kościelny - Aplikacja do zarządzania pieśniami",
+  description: "Zarządzaj swoimi pieśniami kościelnymi, akordami i playlistami z łatwością",
 };
 
 export default function RootLayout({
