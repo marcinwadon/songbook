@@ -40,6 +40,17 @@ export default function SongPage() {
     checkUserPermissions()
   }, [params.id])
 
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement)
+    }
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange)
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange)
+    }
+  }, [])
+
   async function fetchSong() {
     setLoading(true)
     const { data, error } = await supabase
@@ -106,13 +117,17 @@ export default function SongPage() {
     }
   }
 
-  const toggleFullscreen = () => {
-    if (!isFullscreen) {
-      document.documentElement.requestFullscreen()
-    } else {
-      document.exitFullscreen()
+  const toggleFullscreen = async () => {
+    try {
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen()
+      } else {
+        await document.exitFullscreen()
+      }
+    } catch (error) {
+      console.error('Fullscreen error:', error)
+      toast.error('Nie udało się przełączyć trybu pełnoekranowego')
     }
-    setIsFullscreen(!isFullscreen)
   }
 
   if (loading) {
@@ -185,7 +200,7 @@ export default function SongPage() {
                 onClick={toggleFullscreen}
               >
                 <Maximize2 className="h-4 w-4 mr-2" />
-                Fullscreen
+                Pełny ekran
               </Button>
             </div>
           </div>
