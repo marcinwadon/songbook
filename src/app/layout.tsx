@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Songbook - Chord Management App",
-  description: "Manage your songs, chords, and setlists with ease",
+  title: "Śpiewnik - Aplikacja do zarządzania akordami",
+  description: "Zarządzaj swoimi piosenkami, akordami i playlistami z łatwością",
 };
 
 export default function RootLayout({
