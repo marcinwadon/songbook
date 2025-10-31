@@ -22,12 +22,12 @@ export default function RegisterPage() {
     e.preventDefault()
 
     if (password !== confirmPassword) {
-      toast.error('Passwords do not match')
+      toast.error('Hasła nie są identyczne')
       return
     }
 
     if (password.length < 6) {
-      toast.error('Password must be at least 6 characters')
+      toast.error('Hasło musi mieć co najmniej 6 znaków')
       return
     }
 
@@ -42,11 +42,11 @@ export default function RegisterPage() {
       if (error) {
         toast.error(error.message)
       } else {
-        toast.success('Registration successful! Please check your email to confirm your account.')
+        toast.success('Rejestracja zakończona sukcesem! Sprawdź email, aby potwierdzić konto.')
         router.push('/login')
       }
     } catch (error) {
-      toast.error('An error occurred during registration')
+      toast.error('Wystąpił błąd podczas rejestracji')
     } finally {
       setLoading(false)
     }
@@ -55,8 +55,8 @@ export default function RegisterPage() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Create an Account</CardTitle>
-        <CardDescription>Sign up to start managing your songs and setlists</CardDescription>
+        <CardTitle>Utwórz konto</CardTitle>
+        <CardDescription>Zarejestruj się, aby zarządzać swoimi piosenkami i playlistami</CardDescription>
       </CardHeader>
       <form onSubmit={handleRegister}>
         <CardContent className="space-y-4">
@@ -65,7 +65,7 @@ export default function RegisterPage() {
             <Input
               id="email"
               type="email"
-              placeholder="Enter your email"
+              placeholder="Wprowadź swój email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -73,11 +73,11 @@ export default function RegisterPage() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">Hasło</Label>
             <Input
               id="password"
               type="password"
-              placeholder="Create a password (min 6 characters)"
+              placeholder="Utwórz hasło (min. 6 znaków)"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -86,11 +86,11 @@ export default function RegisterPage() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="confirmPassword">Confirm Password</Label>
+            <Label htmlFor="confirmPassword">Potwierdź hasło</Label>
             <Input
               id="confirmPassword"
               type="password"
-              placeholder="Confirm your password"
+              placeholder="Potwierdź swoje hasło"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
@@ -100,12 +100,12 @@ export default function RegisterPage() {
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? 'Creating account...' : 'Sign Up'}
+            {loading ? 'Tworzenie konta...' : 'Zarejestruj się'}
           </Button>
           <p className="text-sm text-muted-foreground text-center">
-            Already have an account?{' '}
+            Masz już konto?{' '}
             <Link href="/login" className="text-primary hover:underline">
-              Sign in
+              Zaloguj się
             </Link>
           </p>
         </CardFooter>

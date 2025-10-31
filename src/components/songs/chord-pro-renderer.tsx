@@ -10,7 +10,7 @@ interface ChordProRendererProps {
 }
 
 export function ChordProRenderer({ content, transpose = 0, className = '' }: ChordProRendererProps) {
-  const html = useMemo(() => {
+  const formattedContent = useMemo(() => {
     const parser = new ChordSheetJS.ChordProParser()
     let song = parser.parse(content)
 
@@ -19,18 +19,20 @@ export function ChordProRenderer({ content, transpose = 0, className = '' }: Cho
       song = song.transpose(transpose)
     }
 
-    const formatter = new ChordSheetJS.HtmlDivFormatter()
+    // Use HtmlTableFormatter for better chord positioning
+    const formatter = new ChordSheetJS.HtmlTableFormatter({
+      // This ensures chords appear above lyrics
+      renderBlankLines: false
+    })
+
     return formatter.format(song)
   }, [content, transpose])
 
   return (
-    <div
-      className={`chord-sheet ${className}`}
-      dangerouslySetInnerHTML={{ __html: html }}
-      style={{
-        fontFamily: 'monospace',
-        lineHeight: '2',
-      }}
-    />
+    <div className={`chord-pro-output ${className}`}>
+      <div
+        dangerouslySetInnerHTML={{ __html: formattedContent }}
+      />
+    </div>
   )
 }

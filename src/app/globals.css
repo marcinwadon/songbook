@@ -121,49 +121,69 @@
   }
 }
 
-/* ChordSheetJS Styles */
-.chord-sheet {
-  font-family: 'Courier New', monospace;
-  line-height: 2;
+/* ChordPro Styles */
+.chord-pro-output {
+  font-family: 'Courier New', 'Consolas', monospace;
+  line-height: 1.6;
 }
 
-.chord-sheet .row {
-  margin-bottom: 1em;
+/* Table-based chord formatting */
+.chord-pro-output table {
+  border-collapse: collapse;
+  margin-bottom: 0.5em;
 }
 
-.chord-sheet .chord {
-  position: relative;
-  display: inline-block;
+.chord-pro-output td {
+  padding: 0;
+  vertical-align: bottom;
+  white-space: pre;
 }
 
-.chord-sheet .chord > span {
-  position: absolute;
-  top: -1.2em;
-  font-weight: bold;
+/* Chord row styling */
+.chord-pro-output tr:first-child td {
   color: var(--primary);
+  font-weight: bold;
   font-size: 0.9em;
+  padding-bottom: 2px;
+  height: 1.2em;
 }
 
-.chord-sheet .lyrics {
-  display: inline;
+/* Lyrics row styling */
+.chord-pro-output tr:last-child td {
+  color: var(--foreground);
+  font-size: 1em;
 }
 
-.chord-sheet .comment {
+/* Comments and metadata */
+.chord-pro-output .comment {
   font-style: italic;
   color: var(--muted-foreground);
   margin: 0.5em 0;
+  display: block;
 }
 
-.chord-sheet .paragraph {
+.chord-pro-output .paragraph {
   margin-bottom: 1.5em;
 }
 
 /* Fullscreen Styles */
-.fullscreen .chord-sheet {
-  font-size: 1.5em;
-  line-height: 2.5;
+.fullscreen .chord-pro-output {
+  font-size: 1.8em;
+  line-height: 2;
 }
 
-.fullscreen .chord-sheet .chord > span {
-  font-size: 1.2em;
+.fullscreen .chord-pro-output tr:first-child td {
+  font-size: 1.1em;
+  padding-bottom: 4px;
+}
+
+.fullscreen .chord-pro-output tr:last-child td {
+  font-size: 1em;
+}
+
+/* Remove any default table borders */
+.chord-pro-output table,
+.chord-pro-output td,
+.chord-pro-output tr {
+  border: none;
 }

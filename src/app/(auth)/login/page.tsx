@@ -30,12 +30,12 @@ export default function LoginPage() {
       if (error) {
         toast.error(error.message)
       } else {
-        toast.success('Logged in successfully!')
+        toast.success('Zalogowano pomyślnie!')
         router.push('/songs')
         router.refresh()
       }
     } catch (error) {
-      toast.error('An error occurred during login')
+      toast.error('Wystąpił błąd podczas logowania')
     } finally {
       setLoading(false)
     }
@@ -44,8 +44,8 @@ export default function LoginPage() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Welcome to Songbook</CardTitle>
-        <CardDescription>Sign in to access your songs and setlists</CardDescription>
+        <CardTitle>Witaj w Śpiewniku</CardTitle>
+        <CardDescription>Zaloguj się, aby uzyskać dostęp do swoich piosenek i playlist</CardDescription>
       </CardHeader>
       <form onSubmit={handleLogin}>
         <CardContent className="space-y-4">
@@ -54,7 +54,7 @@ export default function LoginPage() {
             <Input
               id="email"
               type="email"
-              placeholder="Enter your email"
+              placeholder="Wprowadź swój email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -62,11 +62,11 @@ export default function LoginPage() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">Hasło</Label>
             <Input
               id="password"
               type="password"
-              placeholder="Enter your password"
+              placeholder="Wprowadź swoje hasło"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -76,12 +76,12 @@ export default function LoginPage() {
         </CardContent>
         <CardFooter className="flex flex-col space-y-4">
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? 'Signing in...' : 'Sign In'}
+            {loading ? 'Logowanie...' : 'Zaloguj się'}
           </Button>
           <p className="text-sm text-muted-foreground text-center">
-            Don't have an account?{' '}
+            Nie masz konta?{' '}
             <Link href="/register" className="text-primary hover:underline">
-              Sign up
+              Zarejestruj się
             </Link>
           </p>
         </CardFooter>

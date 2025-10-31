@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
+import { ThemeToggle } from '@/components/ui/theme-toggle'
 import { User } from '@supabase/supabase-js'
 import { Home, Music, ListMusic, LogOut, Plus } from 'lucide-react'
 import { toast } from 'sonner'
@@ -20,9 +21,9 @@ export function MainNav({ user, isAdmin }: MainNavProps) {
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut()
     if (error) {
-      toast.error('Error signing out')
+      toast.error('Błąd podczas wylogowania')
     } else {
-      toast.success('Logged out successfully')
+      toast.success('Wylogowano pomyślnie')
       router.push('/login')
       router.refresh()
     }
@@ -35,26 +36,26 @@ export function MainNav({ user, isAdmin }: MainNavProps) {
           <div className="flex items-center space-x-6">
             <Link href="/" className="flex items-center space-x-2">
               <Music className="h-6 w-6" />
-              <span className="text-lg font-bold">Songbook</span>
+              <span className="text-lg font-bold">Śpiewnik</span>
             </Link>
 
             <div className="flex items-center space-x-4">
               <Link href="/songs" className="flex items-center space-x-1 text-sm hover:text-primary">
                 <Home className="h-4 w-4" />
-                <span>Songs</span>
+                <span>Piosenki</span>
               </Link>
 
               {user && (
                 <>
                   <Link href="/setlists" className="flex items-center space-x-1 text-sm hover:text-primary">
                     <ListMusic className="h-4 w-4" />
-                    <span>Setlists</span>
+                    <span>Playlisty</span>
                   </Link>
 
                   {isAdmin && (
                     <Link href="/admin/songs/new" className="flex items-center space-x-1 text-sm hover:text-primary">
                       <Plus className="h-4 w-4" />
-                      <span>New Song</span>
+                      <span>Nowa piosenka</span>
                     </Link>
                   )}
                 </>
@@ -63,6 +64,7 @@ export function MainNav({ user, isAdmin }: MainNavProps) {
           </div>
 
           <div className="flex items-center space-x-4">
+            <ThemeToggle />
             {user ? (
               <>
                 <span className="text-sm text-muted-foreground">
@@ -76,16 +78,16 @@ export function MainNav({ user, isAdmin }: MainNavProps) {
                   className="flex items-center space-x-1"
                 >
                   <LogOut className="h-4 w-4" />
-                  <span>Logout</span>
+                  <span>Wyloguj</span>
                 </Button>
               </>
             ) : (
               <div className="flex items-center space-x-2">
                 <Link href="/login">
-                  <Button variant="ghost" size="sm">Login</Button>
+                  <Button variant="ghost" size="sm">Zaloguj</Button>
                 </Link>
                 <Link href="/register">
-                  <Button size="sm">Sign Up</Button>
+                  <Button size="sm">Zarejestruj</Button>
                 </Link>
               </div>
             )}
