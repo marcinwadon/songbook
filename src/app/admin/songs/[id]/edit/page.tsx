@@ -166,29 +166,29 @@ export default function EditSongPage() {
               <Link href={`/songs/${params.id}`}>
                 <Button variant="ghost" size="sm">
                   <ArrowLeft className="h-4 w-4 mr-2" />
-                  Back to Song
+                  Powrót do pieśni
                 </Button>
               </Link>
-              <h1 className="text-2xl font-bold">Edit Song</h1>
+              <h1 className="text-2xl font-bold">Edytuj pieśń</h1>
             </div>
           </div>
 
           <form onSubmit={handleSubmit}>
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="space-y-6">
               {/* Form Section */}
               <Card>
                 <CardHeader>
-                  <CardTitle>Song Details</CardTitle>
+                  <CardTitle>Szczegóły pieśni</CardTitle>
                   <CardDescription>
-                    Update the song information and lyrics
+                    Zaktualizuj informacje i tekst pieśni
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="title">Song Title *</Label>
+                    <Label htmlFor="title">Tytuł pieśni *</Label>
                     <Input
                       id="title"
-                      placeholder="Enter song title"
+                      placeholder="Wprowadź tytuł pieśni"
                       value={formData.title}
                       onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                       required
@@ -197,7 +197,7 @@ export default function EditSongPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="key">Original Key</Label>
+                    <Label htmlFor="key">Tonacja</Label>
                     <Select
                       value={formData.key}
                       onValueChange={(value) => setFormData({ ...formData, key: value })}
@@ -217,7 +217,7 @@ export default function EditSongPage() {
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="public">Visibility</Label>
+                    <Label htmlFor="public">Widoczność</Label>
                     <Select
                       value={formData.public ? 'public' : 'private'}
                       onValueChange={(value) => setFormData({ ...formData, public: value === 'public' })}
@@ -227,15 +227,15 @@ export default function EditSongPage() {
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="public">Public - Anyone can view</SelectItem>
-                        <SelectItem value="private">Private - Only you can view</SelectItem>
+                        <SelectItem value="public">Publiczna - Widoczna dla wszystkich</SelectItem>
+                        <SelectItem value="private">Prywatna - Widoczna tylko dla Ciebie</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="content">
-                      Song Content (ChordPro Format) *
+                      Treść pieśni (Format ChordPro) *
                     </Label>
                     <Textarea
                       id="content"
@@ -243,11 +243,11 @@ export default function EditSongPage() {
                       onChange={(e) => setFormData({ ...formData, content: e.target.value })}
                       required
                       disabled={saving}
-                      rows={12}
-                      className="font-mono text-sm"
+                      rows={20}
+                      className="font-mono text-sm resize-y min-h-[400px]"
                     />
                     <p className="text-xs text-muted-foreground">
-                      Use [C], [Am], [G], etc. to add chords above lyrics
+                      Użyj [C], [Am], [G], itd. aby dodać akordy nad tekstem
                     </p>
                   </div>
                 </CardContent>
@@ -261,12 +261,12 @@ export default function EditSongPage() {
                     {showPreview ? (
                       <>
                         <EyeOff className="h-4 w-4 mr-2" />
-                        Hide Preview
+                        Ukryj podgląd
                       </>
                     ) : (
                       <>
                         <Eye className="h-4 w-4 mr-2" />
-                        Show Preview
+                        Pokaż podgląd
                       </>
                     )}
                   </Button>
@@ -277,11 +277,11 @@ export default function EditSongPage() {
                       onClick={handleCancel}
                       disabled={saving}
                     >
-                      Cancel
+                      Anuluj
                     </Button>
                     <Button type="submit" disabled={saving}>
                       <Save className="h-4 w-4 mr-2" />
-                      {saving ? 'Saving...' : 'Save Changes'}
+                      {saving ? 'Zapisywanie...' : 'Zapisz zmiany'}
                     </Button>
                   </div>
                 </CardFooter>
@@ -291,51 +291,50 @@ export default function EditSongPage() {
               {showPreview && (
                 <Card>
                   <CardHeader>
-                    <CardTitle>Preview</CardTitle>
+                    <CardTitle>Podgląd</CardTitle>
                     <CardDescription>
-                      This is how your song will appear
+                      Tak będzie wyglądać Twoja pieśń
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <div className="bg-muted/20 p-4 rounded-lg">
+                    <div className="bg-muted/20 p-6 rounded-lg">
                       {formData.content ? (
                         <ChordProRenderer content={formData.content} />
                       ) : (
                         <p className="text-muted-foreground text-center py-8">
-                          Enter some content to see the preview
+                          Wprowadź treść, aby zobaczyć podgląd
                         </p>
                       )}
                     </div>
                   </CardContent>
                 </Card>
               )}
-            </div>
 
-            {/* Help Section */}
-            {!showPreview && (
-              <Card className="md:col-span-1">
+              {/* Help Section */}
+              {!showPreview && (
+                <Card>
                 <CardHeader>
-                  <CardTitle>ChordPro Quick Guide</CardTitle>
+                  <CardTitle>Szybki przewodnik ChordPro</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3 text-sm">
                   <div>
-                    <strong>Basic Chords:</strong>
-                    <p className="text-muted-foreground">Use [C], [Am], [G], etc. to place chords</p>
+                    <strong>Podstawowe akordy:</strong>
+                    <p className="text-muted-foreground">Użyj [C], [Am], [G], itd. aby umieścić akordy</p>
                   </div>
                   <div>
-                    <strong>Metadata:</strong>
-                    <p className="text-muted-foreground">{`{title: Song Name}`}</p>
+                    <strong>Metadane:</strong>
+                    <p className="text-muted-foreground">{`{title: Nazwa pieśni}`}</p>
                     <p className="text-muted-foreground">{`{key: C}`}</p>
                   </div>
                   <div>
-                    <strong>Comments:</strong>
-                    <p className="text-muted-foreground">{`{comment: This is a comment}`}</p>
+                    <strong>Komentarze:</strong>
+                    <p className="text-muted-foreground">{`{comment: To jest komentarz}`}</p>
                   </div>
                   <div>
-                    <strong>Example:</strong>
+                    <strong>Przykład:</strong>
                     <pre className="text-xs bg-muted p-2 rounded mt-2">
-{`[C]Amazing [G]Grace how [Am]sweet the [F]sound
-That [C]saved a [G]wretch like [C]me`}
+{`[C]Wspaniała [G]łaska, jak [Am]słodki to [F]dźwięk
+Który [C]zbawił [G]nędznika jak [C]ja`}
                     </pre>
                   </div>
                 </CardContent>
