@@ -120,3 +120,50 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* ChordSheetJS Styles */
+.chord-sheet {
+  font-family: 'Courier New', monospace;
+  line-height: 2;
+}
+
+.chord-sheet .row {
+  margin-bottom: 1em;
+}
+
+.chord-sheet .chord {
+  position: relative;
+  display: inline-block;
+}
+
+.chord-sheet .chord > span {
+  position: absolute;
+  top: -1.2em;
+  font-weight: bold;
+  color: var(--primary);
+  font-size: 0.9em;
+}
+
+.chord-sheet .lyrics {
+  display: inline;
+}
+
+.chord-sheet .comment {
+  font-style: italic;
+  color: var(--muted-foreground);
+  margin: 0.5em 0;
+}
+
+.chord-sheet .paragraph {
+  margin-bottom: 1.5em;
+}
+
+/* Fullscreen Styles */
+.fullscreen .chord-sheet {
+  font-size: 1.5em;
+  line-height: 2.5;
+}
+
+.fullscreen .chord-sheet .chord > span {
+  font-size: 1.2em;
+}
