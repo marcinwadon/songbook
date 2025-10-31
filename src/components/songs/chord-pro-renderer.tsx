@@ -77,7 +77,7 @@ function renderCustomFormat(song: any, mode: 'right' | 'hidden'): string {
     }
 
     if (!line.items || line.items.length === 0) {
-      html += '<div class="line"><div class="lyrics">&nbsp;</div></div>'
+      html += '<div class="line"><div class="lyrics"> </div></div>'
       continue
     }
 
@@ -95,15 +95,16 @@ function renderCustomFormat(song: any, mode: 'right' | 'hidden'): string {
     }
 
     const chordsText = chords.join(' ')
+    const displayLyrics = lyrics.trim() === '' ? ' ' : escapeHtml(lyrics)
 
     if (mode === 'right') {
       html += `<div class="line">
-        <div class="lyrics">${escapeHtml(lyrics || '&nbsp;')}</div>
+        <div class="lyrics">${displayLyrics}</div>
         ${chordsText ? `<div class="chords">${escapeHtml(chordsText)}</div>` : ''}
       </div>`
     } else {
       // hidden mode - only show lyrics
-      html += `<div class="line"><div class="lyrics">${escapeHtml(lyrics || '&nbsp;')}</div></div>`
+      html += `<div class="line"><div class="lyrics">${displayLyrics}</div></div>`
     }
   }
 
