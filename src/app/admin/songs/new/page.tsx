@@ -261,6 +261,7 @@ Który [C]zbawił [G]nędznika jak [C]ja`}
                   </CardContent>
                 </Card>
               )}
+            </div>
           </form>
         </div>
       </div>

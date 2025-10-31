@@ -313,33 +313,34 @@ export default function EditSongPage() {
               {/* Help Section */}
               {!showPreview && (
                 <Card>
-                <CardHeader>
-                  <CardTitle>Szybki przewodnik ChordPro</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3 text-sm">
-                  <div>
-                    <strong>Podstawowe akordy:</strong>
-                    <p className="text-muted-foreground">Użyj [C], [Am], [G], itd. aby umieścić akordy</p>
-                  </div>
-                  <div>
-                    <strong>Metadane:</strong>
-                    <p className="text-muted-foreground">{`{title: Nazwa pieśni}`}</p>
-                    <p className="text-muted-foreground">{`{key: C}`}</p>
-                  </div>
-                  <div>
-                    <strong>Komentarze:</strong>
-                    <p className="text-muted-foreground">{`{comment: To jest komentarz}`}</p>
-                  </div>
-                  <div>
-                    <strong>Przykład:</strong>
-                    <pre className="text-xs bg-muted p-2 rounded mt-2">
+                  <CardHeader>
+                    <CardTitle>Szybki przewodnik ChordPro</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-3 text-sm">
+                    <div>
+                      <strong>Podstawowe akordy:</strong>
+                      <p className="text-muted-foreground">Użyj [C], [Am], [G], itd. aby umieścić akordy</p>
+                    </div>
+                    <div>
+                      <strong>Metadane:</strong>
+                      <p className="text-muted-foreground">{`{title: Nazwa pieśni}`}</p>
+                      <p className="text-muted-foreground">{`{key: C}`}</p>
+                    </div>
+                    <div>
+                      <strong>Komentarze:</strong>
+                      <p className="text-muted-foreground">{`{comment: To jest komentarz}`}</p>
+                    </div>
+                    <div>
+                      <strong>Przykład:</strong>
+                      <pre className="text-xs bg-muted p-2 rounded mt-2">
 {`[C]Wspaniała [G]łaska, jak [Am]słodki to [F]dźwięk
 Który [C]zbawił [G]nędznika jak [C]ja`}
-                    </pre>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
+                      </pre>
+                    </div>
+                  </CardContent>
+                </Card>
+              )}
+            </div>
           </form>
         </div>
       </div>
