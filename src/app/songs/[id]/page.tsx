@@ -32,7 +32,7 @@ export default function SongPage() {
   const [currentKey, setCurrentKey] = useState<string>('')
   const [chordDisplay, setChordDisplay] = useState<ChordDisplay>('above')
   const [isFullscreen, setIsFullscreen] = useState(false)
-  const [fontSize, setFontSize] = useState(100) // percentage
+  const [fontSize, setFontSize] = useState(70) // percentage
   const [currentVerse, setCurrentVerse] = useState(0)
   const [verses, setVerses] = useState<string[]>([])
   const [isAdmin, setIsAdmin] = useState(false)
@@ -76,16 +76,16 @@ export default function SongPage() {
       } else if (e.key === 'ArrowLeft') {
         e.preventDefault()
         setCurrentVerse(prev => Math.max(prev - 1, 0))
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault()
+        setFontSize(prev => Math.min(prev + 10, 200))
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault()
+        setFontSize(prev => Math.max(prev - 10, 50))
       } else if (e.key === 'Escape') {
         if (document.fullscreenElement) {
           document.exitFullscreen()
         }
-      } else if (e.key === '+' || e.key === '=') {
-        e.preventDefault()
-        setFontSize(prev => Math.min(prev + 10, 200))
-      } else if (e.key === '-') {
-        e.preventDefault()
-        setFontSize(prev => Math.max(prev - 10, 50))
       }
     }
 
@@ -268,18 +268,18 @@ export default function SongPage() {
 
         {/* Verse indicator - top left */}
         {verses.length > 1 && (
-          <div className="absolute top-4 left-4 text-2xl text-muted-foreground z-50">
+          <div className="absolute top-4 left-4 text-lg text-muted-foreground z-50">
             {currentVerse + 1} / {verses.length}
           </div>
         )}
 
         <div className="fullscreen-view w-full">
           <div className="max-w-6xl mx-auto" style={{ fontSize: `${fontSize}%` }}>
-            <h1 className="text-5xl font-bold mb-6 text-center">{song.title}</h1>
+            <h1 className="text-3xl font-bold mb-4 text-center">{song.title}</h1>
             {currentKey && (
-              <p className="text-2xl text-muted-foreground mb-12 text-center">Tonacja: {currentKey}</p>
+              <p className="text-xl text-muted-foreground mb-6 text-center">Tonacja: {currentKey}</p>
             )}
-            <div className="text-3xl leading-loose">
+            <div className="leading-loose">
               <ChordProRenderer
                 content={currentVerseContent}
                 transpose={transpose}
