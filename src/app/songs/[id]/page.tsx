@@ -30,9 +30,23 @@ export default function SongPage() {
   const [loading, setLoading] = useState(true)
   const [transpose, setTranspose] = useState(0)
   const [currentKey, setCurrentKey] = useState<string>('')
-  const [chordDisplay, setChordDisplay] = useState<ChordDisplay>('above')
+  const [chordDisplay, setChordDisplay] = useState<ChordDisplay>(() => {
+    // Load from localStorage on initial mount
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('songbook-chordDisplay')
+      return (saved as ChordDisplay) || 'above'
+    }
+    return 'above'
+  })
   const [isFullscreen, setIsFullscreen] = useState(false)
-  const [fontSize, setFontSize] = useState(70) // percentage
+  const [fontSize, setFontSize] = useState(() => {
+    // Load from localStorage on initial mount
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('songbook-fontSize')
+      return saved ? parseInt(saved) : 70
+    }
+    return 70
+  })
   const [currentVerse, setCurrentVerse] = useState(0)
   const [verses, setVerses] = useState<string[]>([])
   const [isAdmin, setIsAdmin] = useState(false)
@@ -43,6 +57,20 @@ export default function SongPage() {
     fetchSong()
     checkUserPermissions()
   }, [params.id])
+
+  useEffect(() => {
+    // Save fontSize to localStorage whenever it changes
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('songbook-fontSize', fontSize.toString())
+    }
+  }, [fontSize])
+
+  useEffect(() => {
+    // Save chordDisplay to localStorage whenever it changes
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('songbook-chordDisplay', chordDisplay)
+    }
+  }, [chordDisplay])
 
   useEffect(() => {
     const handleFullscreenChange = () => {
